@@ -43,3 +43,8 @@
 - user_prompt: "go ahead with phase 7"
 - assistant_response_summary: "Implemented phase 7 FastAPI review surface: X-User-Id lookup against approvers.csv, GET /health, /quotes with status filter, role-aware /quotes/queue, /quotes/{id} detail with lines/request/audit, POST approve and reject with store-enforced ordering and RBAC, and an audited PUT edit stub returning 501 with before/after and production steps. Added get_quote_lines/StoredLine to the store. Added 14 API tests (86 total pass) and verified uvicorn app.api:create_app --factory with real HTTP calls (health, duplicate filter, U01 queue)."
 - files_affected: "app/api.py, app/store.py, tests/test_api.py, .chat-history/log.md"
+---
+- timestamp: "2026-11-17T22:05:32-05:00"
+- user_prompt: "go ahead with phase 8"
+- assistant_response_summary: "Phase 8 verification: added tests/test_output_contract.py guarding the committed routing_results.json (order, exact keys, types, statuses, approvers, duplicate and flags) and tests/test_reliability.py for a total stock outage (10 rows, one quote-level unavailable flag each, quotes still persisted) and stale reporting data end to end. 90 tests pass; confirmed the committed output is byte-identical to a fresh pipeline run; secret scan found no .env or credential patterns. Deliverable checklist shows README still needs the six required headings."
+- files_affected: "tests/test_output_contract.py, tests/test_reliability.py, .chat-history/log.md"
