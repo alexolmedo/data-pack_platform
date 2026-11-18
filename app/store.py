@@ -172,6 +172,20 @@ def lines_signature(draft: DraftQuote) -> str:
 
 
 @dataclass(frozen=True)
+class StoredLine:
+    draft_id: str
+    line: int
+    part_number: str
+    quantity: Decimal
+    unit_price: Decimal
+    list_price: Decimal
+    price_source: str
+    stock_status: Optional[str]
+    stock_available: Optional[int]
+    stock_as_of: Optional[datetime]
+
+
+@dataclass(frozen=True)
 class StoredQuote:
     draft_id: str
     rfq_id: str
@@ -215,6 +229,21 @@ def _row_to_quote(row: sqlite3.Row) -> StoredQuote:
         rationale=row["rationale"],
         created_at=datetime.fromisoformat(row["created_at"]),
         updated_at=datetime.fromisoformat(row["updated_at"]),
+    )
+
+
+def _row_to_line(row: sqlite3.Row) -> StoredLine:
+    return StoredLine(
+        draft_id=row["draft_id"],
+        line=row["line_no"],
+        part_number=row["part_number"],
+        quantity=_decimal(row["quantity"]),
+        unit_price=_decimal(row["unit_price"]),
+        list_price=_decimal(row["list_price"]),
+        price_source=row["price_source"],
+        stock_status=row["stock_status"],
+        stock_available=row["stock_available"],
+        stock_as_of=_parse_dt(row["stock_as_of"]),
     )
 
 
@@ -778,6 +807,20 @@ class QuoteStore:
                 "SELECT * FROM quotes WHERE draft_id = ?", (draft_id,)
             ).fetchone()
             return _row_to_quote(row) if row is not None else None
+        finally:
+            connection.close()
+
+    def get_quote_lines(self, draft_id: str) -> List[StoredLine]:
+        connection = self._connect()
+        try:
+            rows = connection.execute(
+                """
+                SELECT * FROM quote_lines WHERE draft_id = ?
+                ORDER BY line_no ASC
+                """,
+                (draft_id,),
+            ).fetchall()
+            return [_row_to_line(row) for row in rows]
         finally:
             connection.close()
 
