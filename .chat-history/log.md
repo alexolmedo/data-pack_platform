@@ -23,3 +23,8 @@
 - user_prompt: "Continue with step 3"
 - assistant_response_summary: "Implemented phase 3 stock layer: HttpStockClient with 50-part batch chunking, timeout, bounded exponential backoff+jitter, retry_after_seconds handling, non-retryable errors, and per-part StockReading outcomes; StaticStockClient fixture double; check_stock staleness marking at 24h; apply_stock; stock_flags emitting line-level not-found/out-of-stock/stale flags and one quote-level unavailable-after-retries flag. Added 14 tests (30 total pass) and verified against the real mock HTTP server."
 - files_affected: "app/stock.py, app/models.py, tests/test_stock.py, .chat-history/log.md"
+---
+- timestamp: "2026-11-17T21:53:04-05:00"
+- user_prompt: "go ahead with part 4"
+- assistant_response_summary: "Implemented phase 4 routing: confidence_flags for extraction below 0.85, tier logic with 15%/25%/$25k boundaries (VP first), exact-region manager/VP resolution, out-of-office backup chains with cycle guard, prepared_by specialist assignment with specialist backup, flag merge/dedupe, duplicate short-circuit, and route_drafts batch helper. Added 18 routing tests (48 total pass) and verified all 10 sample drafts end to end (Central OOO -> U04; DQ-24103 VP; DQ-24107 expired-contract flag)."
+- files_affected: "app/routing.py, tests/test_routing.py, .chat-history/log.md"
