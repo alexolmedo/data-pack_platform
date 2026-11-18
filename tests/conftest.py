@@ -1,7 +1,7 @@
 """Shared fixtures: real sample data, deterministic policy clock."""
 import json
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
 import pytest
 
@@ -23,7 +23,11 @@ def reporting(settings: Settings) -> ReportingData:
 
 
 @pytest.fixture(scope="session")
-def drafts_by_id() -> Dict[str, DraftQuote]:
+def drafts() -> List[DraftQuote]:
     payload = json.loads((ROOT / "draft_quotes.json").read_text(encoding="utf-8"))
-    drafts = [DraftQuote.model_validate(item) for item in payload["drafts"]]
+    return [DraftQuote.model_validate(item) for item in payload["drafts"]]
+
+
+@pytest.fixture(scope="session")
+def drafts_by_id(drafts: List[DraftQuote]) -> Dict[str, DraftQuote]:
     return {draft.draft_id: draft for draft in drafts}

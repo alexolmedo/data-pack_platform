@@ -33,3 +33,8 @@
 - user_prompt: "go ahead with phase 5"
 - assistant_response_summary: "Implemented phase 5 SQLite store: schema for quotes, quote_lines, approval_requests and audit_events; transactional save_quote/approve/reject/record_audit/record_edit; two-stage approval (specialist sign-off required before manager/VP), guarded status updates plus one request per draft to block double approval, actors limited to specialists or the routed approver; duplicate detection by rfq_id + normalized line hash within 24h with no request for duplicates; pending queues and audit readers. Added 15 store tests (63 total pass); verified all 10 drafts end to end with DQ-24110 correctly duplicate of DQ-24102."
 - files_affected: "app/store.py, app/models.py, tests/test_store.py, .chat-history/log.md"
+---
+- timestamp: "2026-11-17T22:00:13-05:00"
+- user_prompt: "go ahead with phase 6"
+- assistant_response_summary: "Implemented phase 6 pipeline: load/validate draft_quotes.json, per-draft duplicate lookup -> pricing -> stock check/apply -> routing -> persistence (skipping existing drafts to preserve approvals/audit), and atomic write of outputs/routing_results.json; added CLI (python -m app.pipeline) with --fixture, --reset and --output. Added 9 pipeline tests (72 total pass) and generated the real 10-row output against the mock HTTP stock API, including DQ-24110 duplicate_of DQ-24102 and the expected flags/approvers."
+- files_affected: "app/pipeline.py, tests/conftest.py, tests/test_pipeline.py, outputs/routing_results.json, .chat-history/log.md"
