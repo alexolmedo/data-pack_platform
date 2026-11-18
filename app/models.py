@@ -40,7 +40,6 @@ class StockStatus(str, Enum):
     OK = "ok"
     NOT_FOUND = "not_found"
     OUT_OF_STOCK = "out_of_stock"
-    STALE = "stale"
     UNAVAILABLE = "unavailable"
 
 

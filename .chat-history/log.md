@@ -18,3 +18,8 @@
 - user_prompt: "Continue with step 2"
 - assistant_response_summary: "Implemented phase 2: app/reporting.py read-only CSV loaders with validation, ContractBook valid/newest contract selection, and export-timestamp staleness helpers; app/pricing.py pure Decimal pricing with contract/list/expired-contract rules, net/list totals, effective discount relative to list, and stale-export flag; added conftest fixtures and pricing tests. 16 tests pass; all 10 drafts verified (DQ-24103 effective 26.22%, DQ-24107 expired-contract flag, DQ-24106 net $47,652)."
 - files_affected: "app/reporting.py, app/pricing.py, tests/conftest.py, tests/test_pricing.py, .chat-history/log.md"
+---
+- timestamp: "2026-11-17T21:49:48-05:00"
+- user_prompt: "Continue with step 3"
+- assistant_response_summary: "Implemented phase 3 stock layer: HttpStockClient with 50-part batch chunking, timeout, bounded exponential backoff+jitter, retry_after_seconds handling, non-retryable errors, and per-part StockReading outcomes; StaticStockClient fixture double; check_stock staleness marking at 24h; apply_stock; stock_flags emitting line-level not-found/out-of-stock/stale flags and one quote-level unavailable-after-retries flag. Added 14 tests (30 total pass) and verified against the real mock HTTP server."
+- files_affected: "app/stock.py, app/models.py, tests/test_stock.py, .chat-history/log.md"
