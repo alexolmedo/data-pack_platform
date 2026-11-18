@@ -1,0 +1,44 @@
+# Ridgeline quote approval rules.
+#
+# This file is the policy boundary: thresholds, role names and data-quality
+# limits live here so they can change without a code release.
+version: 1
+
+timezone: America/Chicago
+
+# The challenge asks us to price the sample drafts as of Monday 2026-10-12
+# 09:30 Central. Remove this line (or set POLICY_NOW) in production so the
+# service uses the real clock.
+policy_now: "2026-10-12T09:30:00-05:00"
+
+thresholds:
+  # Effective discount (measured against list price).
+  specialist_max_discount_pct: 15.0
+  manager_max_discount_pct: 25.0
+  # A quote at or above this net total needs a regional manager regardless
+  # of how small the discount is.
+  manager_net_total_threshold_usd: 25000.00
+  # Extraction confidence below this forces specialist review.
+  low_confidence_threshold: 0.85
+  # Data-quality limits.
+  stock_stale_hours: 24
+  reporting_stale_hours: 36
+  duplicate_window_hours: 24
+
+roles:
+  specialist: quote_specialist
+  regional_manager: regional_manager
+  vp: vp_sales
+
+specialist:
+  # "prepared_by" uses the draft's prepared_by when that person is an active
+  # specialist; "first_available" picks the first active specialist instead.
+  assignment: prepared_by
+
+retry:
+  max_attempts: 4
+  timeout_seconds: 2.0
+  initial_backoff_seconds: 0.5
+  max_backoff_seconds: 4.0
+  batch_size: 50
+  jitter: true
