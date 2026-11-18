@@ -13,3 +13,8 @@
 - user_prompt: "start with 1"
 - assistant_response_summary: "Implemented phase 1 (skeleton/config/models): config/approval_rules.yml with configurable thresholds, roles, retry and data-quality limits; app/config.py YAML/env loaders with POLICY_NOW override and policy clock; app/models.py domain models for drafts, pricing, routing, stock, approval requests, audit and the exact RoutingResult output; .env.example; added 6 passing smoke tests."
 - files_affected: "app/__init__.py, app/config.py, app/models.py, config/approval_rules.yml, .env.example, tests/test_config_and_models.py, .chat-history/log.md"
+---
+- timestamp: "2026-11-17T21:46:07-05:00"
+- user_prompt: "Continue with step 2"
+- assistant_response_summary: "Implemented phase 2: app/reporting.py read-only CSV loaders with validation, ContractBook valid/newest contract selection, and export-timestamp staleness helpers; app/pricing.py pure Decimal pricing with contract/list/expired-contract rules, net/list totals, effective discount relative to list, and stale-export flag; added conftest fixtures and pricing tests. 16 tests pass; all 10 drafts verified (DQ-24103 effective 26.22%, DQ-24107 expired-contract flag, DQ-24106 net $47,652)."
+- files_affected: "app/reporting.py, app/pricing.py, tests/conftest.py, tests/test_pricing.py, .chat-history/log.md"
