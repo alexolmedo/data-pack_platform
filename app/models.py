@@ -202,8 +202,11 @@ class ApprovalRequest(BaseModel):
     draft_id: str
     required_role: str
     approver_id: Optional[str] = None
+    specialist_id: Optional[str] = None
     status: ApprovalRequestStatus = ApprovalRequestStatus.PENDING
     created_at: datetime
+    specialist_approved_at: Optional[datetime] = None
+    specialist_approved_by: Optional[str] = None
     decided_at: Optional[datetime] = None
     decided_by: Optional[str] = None
     note: Optional[str] = None
